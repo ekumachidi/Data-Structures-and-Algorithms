@@ -146,9 +146,4 @@ public class BST {
 //    largest() -> Returns the node that has the largest value.
 	
 //    toString() -> Returns a nice String representation of the node values, sorted in ascending order.
-
-	public static void main(String[] args) {
-
-	}
-
 }

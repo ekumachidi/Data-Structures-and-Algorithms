@@ -13,30 +13,44 @@ public class Queue<Item> {
         private Node<Item> next;
     }
 
-    /* Initialises an empty queue.*/
+    /**
+     * Initialises an empty queue.
+     */
     public Queue() {
         first = null;
         last  = null;
         N = 0;
     }
 
-    /* Returns true if this queue is empty.*/
+    /**
+     * Returns true if this queue is empty. 
+     * @return
+     */
     public boolean isEmpty() {
         return first == null;
     }
 
-    /* Returns the number of items in this queue     */
+    /**
+     * Returns the number of items in this queue
+     * @return
+     */
     public int size() {
         return N;     
     }
 
-    /* Returns the item least recently added to this queue */
+    /**
+     * Returns the item least recently added to this queue 
+     * @return
+     */
     public Item peek() {
         if (isEmpty()) throw new NoSuchElementException("Queue underflow");
         return first.item;
     }
 
-    /*Adds the item to this queue.*/
+    /**
+     * Adds the item to this queue.
+     * @param item
+     */
     public void enqueue(Item item) {
         Node<Item> oldlast = last;
         last = new Node<Item>();
@@ -47,7 +61,10 @@ public class Queue<Item> {
         N++;
     }
 
-    /*Removes and returns the item on this queue*/
+    /**
+     * Removes and returns the item on this queue
+     * @return
+     */
     public Item dequeue() {
         if (isEmpty()) throw new NoSuchElementException("Queue underflow");
         Item item = first.item;
@@ -57,7 +74,9 @@ public class Queue<Item> {
         return item;
     }
 
-    /* Returns a string representation of this queue.*/
+    /**
+     * Returns a string representation of this queue.
+     */
     public String toString() {
         StringBuilder s = new StringBuilder();
 //        for (Item item : this)

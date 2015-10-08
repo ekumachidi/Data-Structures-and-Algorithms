@@ -6,8 +6,11 @@ public class BST {
 		this.root = null;
 	}
 		
-//    add(E element) -> Adds element to the tree.
-//	the operation takes constant time O(1)
+	/**
+	 * add(E element) -> Adds element to the tree.
+	 * the operation takes constant time O(1) 
+	 * @param id
+	 */
 	public void add(int id){
 		Node newNode = new Node(id);
 		if(root==null){
@@ -34,8 +37,12 @@ public class BST {
 		}
 	}
 	
-//    remove(E element) -> Removes element from the tree.
-//	the operation takes constant time O(1)
+	/**
+	 * remove(E element) -> Removes element from the tree. 
+	 * @param id
+	 * @return
+	 * the operation takes constant time O(1)
+	 */
 	public boolean remove(int id){
 		Node parent = root;
 		Node current = root;
@@ -83,8 +90,7 @@ public class BST {
 			}else{
 				parent.right = current.right;
 			}
-		}else if(current.left!=null && current.right!=null){
-			
+		}else if(current.left!=null && current.right!=null){			
 			//now we have found the minimum element in the right sub tree
 			Node successor	 = getSuccessor(current);
 			if(current==root){
@@ -118,13 +124,22 @@ public class BST {
 		return successsor;
 	}
 	
-//    size() -> Returns the total number of nodes in the tree.
+    
+	/**
+	 * size() -> Returns the total number of nodes in the tree. 
+	 * @return
+	 */
 	public int size() {
 		return size();
 	}
 	
-//    contains(E element) -> Returns true if element is in tree, false otherwise.
-//	the operation takes constant time O(1)
+    
+	/**
+	 * contains(E element) -> Returns true if element is in tree, false otherwise. 
+	 * @param id
+	 * @return
+	 * the operation takes constant time O(1)
+	 */
 	public boolean contains(int id){
 		Node current = root;
 		while(current!=null){
@@ -146,4 +161,7 @@ public class BST {
 //    largest() -> Returns the node that has the largest value.
 	
 //    toString() -> Returns a nice String representation of the node values, sorted in ascending order.
+	public String toString(){
+		return "";
+	}
 }

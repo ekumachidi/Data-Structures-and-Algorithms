@@ -9,7 +9,7 @@ public class BetterArray<E> {
 	**/
 	 
 	public static void main(String[] args) {
-		BetterArray array = new BetterArray();
+		BetterArray<Object> array = new BetterArray<Object>();
 	    array.add(2);
 	    array.add(3);
 	    array.insert(0, 1);
@@ -23,8 +23,8 @@ public class BetterArray<E> {
 	    array.index(2); // 1
 	    array.index(10); // -1 
 
-	    array.get(1); // 2
-	    array.get(10000); // ???
+//	    array.get(1); // 2
+//	    array.get(10000); // ???
 	    
 	    System.out.println(array.contains(2));
 		System.out.println("Size: " + array.size());

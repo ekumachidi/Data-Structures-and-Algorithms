@@ -1,11 +1,6 @@
 package org.meltwater.java.dataStructures;
 
-<<<<<<< HEAD
 import java.util.*;
-=======
-import java.util.NoSuchElementException;
-import java.util.TreeSet;
->>>>>>> origin/master
 
 public class Set<Key extends Comparable<Key>> {
 	private TreeSet<Key> set;

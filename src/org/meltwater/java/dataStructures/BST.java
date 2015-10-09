@@ -1,131 +1,72 @@
 package org.meltwater.java.dataStructures;
+import java.util.*;
 
-public class BST {
-	public static Node root;
-	public BST() {
-		this.root = null;
-	}
-		
-	/**
+public class BST <E extends Comparable<E>> implements Iterable<E>
+{
+   /**
+    * Main method for unit tests
+    * @param args
+    */
+   public static void main(String[] args)
+   {
+      Integer[] a = {1,5,2,7,4};
+      BST<Integer> bst = new BST<Integer>();
+      for(Integer n : a) bst.add(n);
+
+      for(Integer n : bst) System.out.print(n);
+      System.out.println();
+
+      System.out.println(bst);
+   }
+
+   private Node<E> root;
+   private Comparator<E> comparator;
+
+   public BST()
+   {
+      root = null;
+      comparator = null;
+   }
+
+   public BST(Comparator<E> comp)
+   {
+      root = null;
+      comparator = comp;
+   }
+
+   private int compare(E x, E y)
+   {
+      if(comparator == null) return x.compareTo(y);
+      else
+      return comparator.compare(x,y);
+   }
+
+   /**
 	 * add(E element) -> Adds element to the tree.
 	 * the operation takes constant time O(1) 
 	 * @param id
 	 */
-	public void add(int id){
-		Node newNode = new Node(id);
-		if(root==null){
-			root = newNode;
-			return;
-		}
-		Node current = root;
-		Node parent = null;
-		while(true){
-			parent = current;
-			if(id<current.data){				
-				current = current.left;
-				if(current==null){
-					parent.left = newNode;
-					return;
-				}
-			}else{
-				current = current.right;
-				if(current==null){
-					parent.right = newNode;
-					return;
-				}
-			}
-		}
-	}
-	
-	/**
-	 * remove(E element) -> Removes element from the tree. 
-	 * @param id
-	 * @return
-	 * the operation takes constant time O(1)
-	 */
-	public boolean remove(int id){
-		Node parent = root;
-		Node current = root;
-		boolean isLeftChild = false;
-		while(current.data!=id){
-			parent = current;
-			if(current.data>id){
-				isLeftChild = true;
-				current = current.left;
-			}else{
-				isLeftChild = false;
-				current = current.right;
-			}
-			if(current ==null){
-				return false;
-			}
-		}
-		//if i am here that means we have found the node
-		//Case 1: if node to be deleted has no children
-		if(current.left==null && current.right==null){
-			if(current==root){
-				root = null;
-			}
-			if(isLeftChild ==true){
-				parent.left = null;
-			}else{
-				parent.right = null;
-			}
-		}
-		//Case 2 : if node to be deleted has only one child
-		else if(current.right==null){
-			if(current==root){
-				root = current.left;
-			}else if(isLeftChild){
-				parent.left = current.left;
-			}else{
-				parent.right = current.left;
-			}
-		}
-		else if(current.left==null){
-			if(current==root){
-				root = current.right;
-			}else if(isLeftChild){
-				parent.left = current.right;
-			}else{
-				parent.right = current.right;
-			}
-		}else if(current.left!=null && current.right!=null){			
-			//now we have found the minimum element in the right sub tree
-			Node successor	 = getSuccessor(current);
-			if(current==root){
-				root = successor;
-			}else if(isLeftChild){
-				parent.left = successor;
-			}else{
-				parent.right = successor;
-			}			
-			successor.left = current.left;
-		}		
-		return true;		
-	}
-	
-	public Node getSuccessor(Node deleleNode){
-		Node successsor =null;
-		Node successsorParent =null;
-		Node current = deleleNode.right;
-		while(current!=null){
-			successsorParent = successsor;
-			successsor = current;
-			current = current.left;
-		}
-		//check if successor has the right child, it cannot have left child for sure
-		// if it does have the right child, add it to the left of successorParent.
-//		successsorParent
-		if(successsor!=deleleNode.right){
-			successsorParent.left = successsor.right;
-			successsor.right = deleleNode.right;
-		}
-		return successsor;
-	}
-	
-    
-	/**
+   public void add(E element)
+   {
+      root = insert(root, element);
+   }
+   private Node<E> insert(Node<E> p, E toInsert)
+   {
+      if (p == null)
+         return new Node<E>(toInsert);
+
+      if (compare(toInsert, p.data) == 0)
+      	return p;
+
+      if (compare(toInsert, p.data) < 0)
+         p.left = insert(p.left, toInsert);
+      else
+         p.right = insert(p.right, toInsert);
+
+      return p;
+   }
+
+   /**
 	 * size() -> Returns the total number of nodes in the tree. 
 	 * @return
 	 */
@@ -133,7 +74,7 @@ public class BST {
 		return size();
 	}
 	
-    
+   
 	/**
 	 * contains(E element) -> Returns true if element is in tree, false otherwise. 
 	 * @param id
@@ -143,25 +84,171 @@ public class BST {
 	public boolean contains(int id){
 		Node current = root;
 		while(current!=null){
-			if(current.data==id){
-				return true;
-			}else if(current.data>id){
-				current = current.left;
-			}else{
-				current = current.right;
-			}
+//			if(current.data==id){
+//				return true;
+//			}else if(current.data>id){
+//				current = current.left;
+//			}else{
+//				current = current.right;
+//			}
 		}
 		return false;
 	}
+	
+   /**
+	 * rcontains(E element)
+	 * Recursively searches for element in tree.
+	 * Returns true if found, false otherwise.
+	 * @param element
+	 * @return
+	 */
+   public boolean search(E element)
+   {
+      return search(root, element);
+   }
+   private boolean search(Node<E> p, E toSearch)
+   {
+      if (p == null)
+         return false;
+      else
+      if (compare(toSearch, p.data) == 0)
+      	return true;
+      else
+      if (compare(toSearch, p.data) < 0)
+         return search(p.left, toSearch);
+      else
+         return search(p.right, toSearch);
+   }
+   /**
+	 * remove(E element) -> Removes element from the tree. 
+	 * @param id
+	 * @return
+	 * the operation takes constant time O(1)
+	 */
+   public void delete(E element)
+   {
+      root = delete(root, element);
+   }
+   private Node<E> delete(Node<E> p, E toDelete)
+   {
+      if (p == null)  throw new RuntimeException("cannot delete.");
+      else
+      if (compare(toDelete, p.data) < 0)
+      p.left = delete (p.left, toDelete);
+      else
+      if (compare(toDelete, p.data)  > 0)
+      p.right = delete (p.right, toDelete);
+      else
+      {
+         if (p.left == null) return p.right;
+         else
+         if (p.right == null) return p.left;
+         else
+         {
+         // get data from the rightmost node in the left subtree
+            p.data = retrieveData(p.left);
+         // delete the rightmost node in the left subtree
+            p.left =  delete(p.left, p.data) ;
+         }
+      }
+      return p;
+   }
+   private E retrieveData(Node<E> p)
+   {
+      while (p.right != null) p = p.right;
 
-//    rcontains(E element) -> Recursively searches for element in tree. Returns true if found, false otherwise.
-	
-//    smallest() -> Returns the node that has the smallest value.
-	
-//    largest() -> Returns the node that has the largest value.
-	
-//    toString() -> Returns a nice String representation of the node values, sorted in ascending order.
-	public String toString(){
-		return "";
-	}
-}
+      return p.data;
+   }
+
+   /**
+    * toString()
+    * Returns a nice String representation of the node values, sorted in ascending order.
+    */
+   public String toString()
+   {
+      StringBuffer sb = new StringBuffer();
+      for(E data : this) sb.append(data.toString());
+
+      return sb.toString();
+   }
+
+   /**
+    * Tree Iterator
+    */
+   public Iterator<E> iterator()
+   {
+      return new MyIterator();
+   }
+   //pre-order
+   /**
+    * MyIterator class, implements java iterator
+    * @author mest
+    *
+    */
+   private class MyIterator implements Iterator<E>
+   {
+      Stack<Node<E>> stk = new Stack<Node<E>>();
+
+      public MyIterator()
+      {
+         if(root != null) stk.push(root);
+      }
+      public boolean hasNext()
+      {
+         return !stk.isEmpty();
+      }
+
+      public E next()
+      {
+         Node<E> cur = stk.peek();
+         if(cur.left != null)
+         {
+            stk.push(cur.left);
+         }
+         else
+         {
+            Node<E> tmp = stk.pop();
+            while( tmp.right == null )
+            {
+               if(stk.isEmpty()) return cur.data;
+               tmp = stk.pop();
+            }
+            stk.push(tmp.right);
+         }
+
+         return cur.data;
+      }//end of next()
+
+      public void remove()
+      {
+
+      }
+   }//end of MyIterator
+
+   /**
+    * The Node Class
+    * @author mest
+    * @param <T>
+    */
+   private class Node<T>
+   {
+      private T data;
+      private Node<T> left, right;
+
+      public Node(T data, Node<T> l, Node<T> r)
+      {
+         left = l; right = r;
+         this.data = data;
+      }
+
+      public Node(T data)
+      {
+         this(data, null, null);
+      }
+
+      public String toString()
+      {
+         return data.toString();
+      }
+   } //end of Node
+}//end of BST

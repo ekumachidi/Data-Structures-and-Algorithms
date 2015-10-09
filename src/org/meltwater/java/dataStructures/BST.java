@@ -3,22 +3,6 @@ import java.util.*;
 
 public class BST <E extends Comparable<E>> implements Iterable<E>
 {
-   /**
-    * Main method for unit tests
-    * @param args
-    */
-   public static void main(String[] args)
-   {
-      Integer[] a = {1,5,2,7,4};
-      BST<Integer> bst = new BST<Integer>();
-      for(Integer n : a) bst.add(n);
-
-      for(Integer n : bst) System.out.print(n);
-      System.out.println();
-
-      System.out.println(bst);
-   }
-
    private Node<E> root;
    private Comparator<E> comparator;
 

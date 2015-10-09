@@ -7,29 +7,6 @@ public class BetterArray<E> {
 	*	BetterArray, an improved Java array that store an unlimited number of elements.
 	*	The operation takes constant amortised time
 	**/
-	 
-	public static void main(String[] args) {
-		BetterArray<Object> array = new BetterArray<Object>();
-	    array.add(2);
-	    array.add(3);
-	    array.insert(0, 1);
-	    
-	    int[] newElements = {4, 5, 6};
-	    array.add(newElements);
-	    
-	    array.contains(2); // true
-	    array.contains(10); // false
-
-	    array.index(2); // 1
-	    array.index(10); // -1 
-
-//	    array.get(1); // 2
-//	    array.get(10000); // ???
-	    
-	    System.out.println(array.contains(2));
-		System.out.println("Size: " + array.size());
-		System.out.println(array.toString());
-	}
 	
 	  private static final int DEFAULT_SIZE = 10;
 	  private E[] array; //An array of E i.e Elements of type E

@@ -1,7 +1,6 @@
 package org.meltwater.java.dataStructures;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 public class Stack<Item> implements Iterable<Item> {
     private int N;                // size of the stack
